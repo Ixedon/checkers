@@ -10,6 +10,7 @@ public class Pole {
     private int mozliwe;
     private int zajete;
     private int bicie;
+    private Pionek zbijany;
     private Pionek pionek;
 
     public Pole(int x,int y, int bok_pola)
@@ -34,7 +35,7 @@ public class Pole {
     public void select() {this.selected=1;}
     public void deselect() {this.selected=0;}
 
-    public void mozbicie() {this.bicie=1;}
+    public void mozbicie(Pionek zbijany) {this.bicie=1; this.zbijany = zbijany;}
     public void mozliwe() {this.mozliwe=1;}
     public void niemozliwe() {this.mozliwe=0; this.bicie = 0;}
 
@@ -45,5 +46,6 @@ public class Pole {
     public int czybicie() {return this.bicie;}
     public int czyzajete() {return this.zajete;}
     public Pionek getPionek() {return this.pionek;}
+    public Pionek getZbijany() {return this.zbijany;}
 
 }

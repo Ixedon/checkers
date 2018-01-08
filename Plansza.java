@@ -81,27 +81,23 @@ public class Plansza extends JComponent
                     selected = pola[x][y];
                     pola[x][y].select();
 
-                    int kierunek = pola[x][y].getPionek().getKolor();
-                    if(naplanszy(x-1,y+kierunek) && pola[x-1][y+kierunek].czyzajete() == 0)
+                    if(pola[x][y].getPionek().czydamka()== 0)
                     {
-                        pola[x-1][y+kierunek].mozliwe();
-                        mozliwosci.add(pola[x-1][y+kierunek]);
-                    }
-                    if(naplanszy(x+1,y+kierunek) && pola[x+1][y+kierunek].czyzajete() == 0)
-                    {
-                        pola[x+1][y+kierunek].mozliwe();
-                        mozliwosci.add(pola[x+1][y+kierunek]);
-                    }
+                        int kierunek = pola[x][y].getPionek().getKolor();
+                        ruch(x,y,1,kierunek);
+                        ruch(x,y,-1,kierunek);
 
-                    if(czybicie(x-1,y+kierunek,-1, kierunek))
-                    {
-                        pola[x-2][y+kierunek*2].mozbicie();
-                        mozliwosci.add(pola[x-2][y+kierunek*2]);
+                        bicie(x,y,1,kierunek);
+                        bicie(x,y,-1,kierunek);
+                        bicie(x,y,1,-kierunek);
+                        bicie(x,y,-1,-kierunek);
                     }
-                    if(czybicie(x+1,y+kierunek, 1,kierunek))
+                    else
                     {
-                        pola[x+2][y+kierunek*2].mozbicie();
-                        mozliwosci.add(pola[x+2][y+kierunek*2]);
+                        ruchdamka(x,y,1,1);
+                        ruchdamka(x,y,-1,1);
+                        ruchdamka(x,y,1,-1);
+                        ruchdamka(x,y,-1,-1);
                     }
 
                 }
@@ -125,6 +121,8 @@ public class Plansza extends JComponent
 
     }
 
+
+
     private void decolor()
     {
         for (Pole p : mozliwosci)
@@ -133,10 +131,13 @@ public class Plansza extends JComponent
         }
         mozliwosci.clear();
     }
+
+
     private boolean naplanszy(int x, int y)
     {
         return x>=0 && x<8 && y>=0 && y<8;
     }
+
     private boolean czybicie(int x, int y,int strona, int kierunek)
     {
         return  naplanszy(x,y) &&
@@ -146,6 +147,48 @@ public class Plansza extends JComponent
                 pola[x][y].getPionek().getKolor() != selected.getPionek().getKolor();
 
     }
+
+    private void bicie(int x,int y, int strona, int kierunek)
+    {
+        if(czybicie(x+strona,y+kierunek,strona, kierunek))
+        {
+            pola[x+strona*2][y+kierunek*2].mozbicie(pola[x+strona][y+kierunek].getPionek());
+            mozliwosci.add(pola[x+strona*2][y+kierunek*2]);
+        }
+    }
+
+    private void ruch(int x,int y, int strona, int kierunek)
+    {
+        if(naplanszy(x+strona,y+kierunek) && pola[x+strona][y+kierunek].czyzajete() == 0)
+        {
+            pola[x+strona][y+kierunek].mozliwe();
+            mozliwosci.add(pola[x+strona][y+kierunek]);
+        }
+    }
+
+    private void ruchdamka(int x,int y, int strona, int kierunek)
+    {
+        int a=strona,b=kierunek,c=0;
+        Pionek zbijany = selected.getPionek();
+        while (naplanszy(x+a, y+b))
+        {
+            if(pola[x+a][y+b].czyzajete() == 0)
+            {
+                if(c==0) pola[x + a][y + b].mozliwe();
+                else if(c == 1) pola[x + a][y + b].mozbicie(zbijany);
+                else break;
+                mozliwosci.add(pola[x+a][y+b]);
+            }
+            else if(selected.getPionek().getKolor() != pola[x+a][y+b].getPionek().getKolor())
+            {c++; zbijany = pola[x+a][y+b].getPionek(); }
+            x+=strona;
+            y+=kierunek;
+        }
+    }
+
+
+
+
 
 
     @Override
