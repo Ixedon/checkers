@@ -24,7 +24,7 @@ public class Plansza extends JComponent
 
     private Dimension prefRozmiar;
     private List<Pionek> pionki;
-    private Pionek [][] plan_pion ;
+   // private Pionek [][] plan_pion ;
     private Pole [][] pola ;
     private Pole selected;
     private List<Pole>mozliwosci;
@@ -33,27 +33,33 @@ public class Plansza extends JComponent
     {
         prefRozmiar = new Dimension(bok_planszy, bok_planszy);
         pionki = new ArrayList<>();
-        plan_pion = new Pionek[8][8];
+        mozliwosci = new ArrayList<>();
+       // plan_pion = new Pionek[8][8];
         pola = new Pole[8][8];
+
+        Pionek pionek;
 
         for (int i=0;i<8;i++)
         {
             for(int j=0;j<8;j++)
             {
+                pola[i][j] = new Pole(i,j,bok_pola);
+
                 if(j<3 && (i+j)%2==1)
                 {
-                    plan_pion[i][j] = new Pionek(1, i,j,bok_pola);
-                    pionki.add(plan_pion[i][j]);
-                    //pola[i][j].wstaw(plan_pion[i][j]);
+                    pionek = new Pionek(1, i,j, pola[i][j], bok_pola);
+                    pionki.add(pionek);
+                    pola[i][j].wstaw(pionek);
                 }
 
                 if(j>4 && (i+j)%2==1)
                 {
-                    plan_pion[i][j] = new Pionek(-1, i, j, bok_pola);
-                    pionki.add(plan_pion[i][j]);
+                    pionek = new Pionek(-1, i,j,pola[i][j], bok_pola);
+                    pionki.add(pionek);
+                    pola[i][j].wstaw(pionek);
                 }
 
-                pola[i][j] = new Pole(i,j,bok_pola);
+
             }
         }
 
@@ -67,30 +73,36 @@ public class Plansza extends JComponent
                 int y = me.getY()/bok_pola;
 //                System.out.println(x);
 //                System.out.println(y);
-                if(plan_pion[x][y] == null) return;
 
-                if(selected !=null) selected.deselect();
 
-                for (Pole p : mozliwosci)
+                if(pola[x][y].czyzajete() == 1)
                 {
-                    p.niemozliwe();
-                }
-                mozliwosci.clear();
 
-                selected = pola[x][y];
-                pola[x][y].select();
+                    if(selected !=null) {selected.deselect(); selected = null;}
+                    decolor();
+                    selected = pola[x][y];
+                    pola[x][y].select();
 
-                int kierunek = plan_pion[x][y].getKolor();
-                if(x>0 && (kierunek > 0 ? y<7 : y>0) && plan_pion[x-1][y+kierunek] == null)
-                {
-                    pola[x-1][y+kierunek].mozliwe();
-                    mozliwosci.add(pola[x-1][y+kierunek]);
+                    int kierunek = pola[x][y].getPionek().getKolor();
+                    if(x>0 && (kierunek > 0 ? y<7 : y>0) && pola[x-1][y+kierunek].czyzajete() == 0)
+                    {
+                        pola[x-1][y+kierunek].mozliwe();
+                        mozliwosci.add(pola[x-1][y+kierunek]);
+                    }
+                    if(x<7 && (kierunek > 0 ? y<7 : y>0) && pola[x+1][y+kierunek].czyzajete() == 0)
+                    {
+                        pola[x+1][y+kierunek].mozliwe();
+                        mozliwosci.add(pola[x+1][y+kierunek]);
+                    }
+
                 }
-                if(x<7 && (kierunek > 0 ? y<7 : y>0) && plan_pion[x+1][y+kierunek] == null)
+                else if(selected != null && pola[x][y].czymozliwe() == 1)
                 {
-                    pola[x+1][y+kierunek].mozliwe();
-                    mozliwosci.add(pola[x+1][y+kierunek]);
+                    decolor();
+                    selected.getPionek().przeun(x,y,pola[x][y]);
+
                 }
+
 
                 repaint();
             }
@@ -99,7 +111,14 @@ public class Plansza extends JComponent
 
     }
 
-
+    void decolor()
+    {
+        for (Pole p : mozliwosci)
+        {
+            p.niemozliwe();
+        }
+        mozliwosci.clear();
+    }
 
 
     @Override
