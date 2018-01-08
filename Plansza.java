@@ -27,6 +27,7 @@ public class Plansza extends JComponent
     private Pionek [][] plan_pion ;
     private Pole [][] pola ;
     private Pole selected;
+    private List<Pole>mozliwosci;
 
     public Plansza()
     {
@@ -34,6 +35,7 @@ public class Plansza extends JComponent
         pionki = new ArrayList<>();
         plan_pion = new Pionek[8][8];
         pola = new Pole[8][8];
+
         for (int i=0;i<8;i++)
         {
             for(int j=0;j<8;j++)
@@ -42,11 +44,12 @@ public class Plansza extends JComponent
                 {
                     plan_pion[i][j] = new Pionek(1, i,j,bok_pola);
                     pionki.add(plan_pion[i][j]);
+                    //pola[i][j].wstaw(plan_pion[i][j]);
                 }
 
                 if(j>4 && (i+j)%2==1)
                 {
-                    plan_pion[i][j] = new Pionek(0, i, j, bok_pola);
+                    plan_pion[i][j] = new Pionek(-1, i, j, bok_pola);
                     pionki.add(plan_pion[i][j]);
                 }
 
@@ -65,9 +68,30 @@ public class Plansza extends JComponent
 //                System.out.println(x);
 //                System.out.println(y);
                 if(plan_pion[x][y] == null) return;
+
                 if(selected !=null) selected.deselect();
+
+                for (Pole p : mozliwosci)
+                {
+                    p.niemozliwe();
+                }
+                mozliwosci.clear();
+
                 selected = pola[x][y];
                 pola[x][y].select();
+
+                int kierunek = plan_pion[x][y].getKolor();
+                if(x>0 && (kierunek > 0 ? y<7 : y>0) && plan_pion[x-1][y+kierunek] == null)
+                {
+                    pola[x-1][y+kierunek].mozliwe();
+                    mozliwosci.add(pola[x-1][y+kierunek]);
+                }
+                if(x<7 && (kierunek > 0 ? y<7 : y>0) && plan_pion[x+1][y+kierunek] == null)
+                {
+                    pola[x+1][y+kierunek].mozliwe();
+                    mozliwosci.add(pola[x+1][y+kierunek]);
+                }
+
                 repaint();
             }
 

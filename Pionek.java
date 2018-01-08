@@ -27,10 +27,11 @@ public class Pionek {
 
         g.fillOval(x*bok_pola + roz-obw/2, y*bok_pola + roz-obw/2 , srednica+obw, srednica+obw);
 
-        if(kolor==0) g.setColor(Color.RED);
+        if(kolor==-1) g.setColor(Color.RED);
         else g.setColor(Color.DARK_GRAY);
 
         g.fillOval(x*bok_pola + roz, y*bok_pola + roz , srednica, srednica);
 
     }
+    public int getKolor(){return this.kolor;}
 }
