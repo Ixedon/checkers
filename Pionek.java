@@ -11,6 +11,7 @@ public class Pionek {
     private int kolor;
     private int x,y;
     private int typ;
+    private int zbity;
     private Pole pole;
 
     public Pionek(int kolor,int x,int y, Pole pole, int bok_pola)
@@ -18,6 +19,7 @@ public class Pionek {
         this.kolor = kolor;
         this.x = x;
         this.y = y;
+        this.zbity = 0;
         this.bok_pola = bok_pola;
         this.pole = pole;
         srednica = (int) (bok_pola * 0.8);
@@ -38,14 +40,28 @@ public class Pionek {
 
     }
 
-    public void przeun(int x, int y, Pole pole)
+    public void przesun(int x, int y, Pole pole)
     {
         this.pole.usun();
+        this.x = x;
         this.y = y;
         this.pole = pole;
         this.pole.wstaw(this);
 
     }
 
+    public void bij(int x, int y, Pole [][] pola)
+    {
+        pola[(this.x + x)/2][(this.y + y)/2].getPionek().zbij();
+        przesun( x, y, pola[x][y]);
+
+    }
+
+    public void zbij()
+    {
+        this.zbity = 1;
+        this.pole.usun();
+    }
+    public int czyzbity(){return zbity;}
     public int getKolor(){return this.kolor;}
 }
