@@ -169,18 +169,23 @@ public class Plansza extends JComponent
     private void ruchdamka(int x,int y, int strona, int kierunek)
     {
         int a=strona,b=kierunek,c=0;
-        Pionek zbijany = selected.getPionek();
+        Pionek zbijany = null;
         while (naplanszy(x+a, y+b))
         {
             if(pola[x+a][y+b].czyzajete() == 0)
             {
                 if(c==0) pola[x + a][y + b].mozliwe();
-                else if(c == 1) pola[x + a][y + b].mozbicie(zbijany);
+                else if(c == 1 && zbijany!=null)
+                        pola[x + a][y + b].mozbicie(zbijany);
                 else break;
                 mozliwosci.add(pola[x+a][y+b]);
             }
-            else if(selected.getPionek().getKolor() != pola[x+a][y+b].getPionek().getKolor())
-            {c++; zbijany = pola[x+a][y+b].getPionek(); }
+            else
+            {
+                c++;
+                if(selected.getPionek().getKolor() != pola[x+a][y+b].getPionek().getKolor())
+                    zbijany = pola[x+a][y+b].getPionek();
+            }
             x+=strona;
             y+=kierunek;
         }
