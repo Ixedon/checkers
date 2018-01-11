@@ -13,15 +13,17 @@ public class Pionek {
     private int typ;
     private int zbity;
     private int damka;
+    private int ip;
     private Pole pole;
 
-    public Pionek(int kolor,int x,int y, Pole pole, int bok_pola)
+    public Pionek(int kolor,int x,int y, Pole pole, int bok_pola, int ip)
     {
         this.kolor = kolor;
         this.x = x;
         this.y = y;
         this.zbity = 0;
         this.damka = 0;
+        this.ip = ip-1;
         this.bok_pola = bok_pola;
         this.pole = pole;
         srednica = (int) (bok_pola * 0.8);
@@ -54,7 +56,7 @@ public class Pionek {
         this.pole = pole;
         this.pole.wstaw(this);
 
-        if(kolor == 1 && this.y == 7 || kolor == -1 && this.y == 0)
+        if(kolor == 1 && this.y == this.ip-1 || kolor == -1 && this.y == 1)
         {
             this.damka = 1;
         }

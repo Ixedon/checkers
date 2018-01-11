@@ -10,10 +10,11 @@ public class Pole {
     private int mozliwe;
     private int zajete;
     private int bicie;
+    private boolean obwod;
     private Pionek zbijany;
     private Pionek pionek;
 
-    public Pole(int x,int y, int bok_pola)
+    public Pole(int x,int y, int bok_pola,boolean obwod)
     {
         this.x = x;
         this.y = y;
@@ -22,10 +23,12 @@ public class Pole {
         this.mozliwe = 0;
         this.zajete = 0;
         this.bicie = 0;
+        this.obwod = obwod;
     }
     public void draw(Graphics g)
     {
-        if(selected == 1) g.setColor(Color.BLUE);
+        if(obwod == true)g.setColor(new Color(200, 130, 24));
+        else if(selected == 1) g.setColor(Color.BLUE);
         else if(mozliwe == 1) g.setColor(Color.GREEN);
         else if(bicie == 1) g.setColor(Color.RED);
         else if((x+y)%2==1)g.setColor(Color.BLACK);

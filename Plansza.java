@@ -19,8 +19,10 @@ import javax.swing.JComponent;
 public class Plansza extends JComponent
 {
 
-    private static int bok_planszy = 600;
-    private static int bok_pola = bok_planszy/8;
+    private static int bok_planszy = 500;
+    private int ip = 8 + 2;
+    private  int bok_pola = bok_planszy/ip;
+
 
     private Dimension prefRozmiar;
     private List<Pionek> pionki;
@@ -31,30 +33,30 @@ public class Plansza extends JComponent
 
     public Plansza()
     {
-        prefRozmiar = new Dimension(bok_planszy, bok_planszy);
+        prefRozmiar = new Dimension(bok_planszy/*+2*bok_pola*/, bok_planszy/*+2*bok_pola*/);
         pionki = new ArrayList<>();
         mozliwosci = new ArrayList<>();
         mozbicia = new ArrayList<>();
-        pola = new Pole[8][8];
+        pola = new Pole[ip][ip];
 
         Pionek pionek;
 
-        for (int i=0;i<8;i++)
+        for (int i=0;i<ip;i++)
         {
-            for(int j=0;j<8;j++)
+            for(int j=0;j<ip;j++)
             {
-                pola[i][j] = new Pole(i,j,bok_pola);
+                pola[i][j] = new Pole(i,j,bok_pola,!naplanszy(i,j));
 
-                if(j<3 && (i+j)%2==1)
+                if(naplanszy(i,j) && j<ip/2-1 && (i+j)%2==1)
                 {
-                    pionek = new Pionek(1, i,j, pola[i][j], bok_pola);
+                    pionek = new Pionek(1, i,j, pola[i][j], bok_pola,ip);
                     pionki.add(pionek);
                     pola[i][j].wstaw(pionek);
                 }
 
-                if(j>4 && (i+j)%2==1)
+                if( naplanszy(i,j) && j>ip/2 && (i+j)%2==1)
                 {
-                    pionek = new Pionek(-1, i,j,pola[i][j], bok_pola);
+                    pionek = new Pionek(-1, i,j,pola[i][j], bok_pola,ip);
                     pionki.add(pionek);
                     pola[i][j].wstaw(pionek);
                 }
@@ -71,7 +73,7 @@ public class Plansza extends JComponent
 
                 int x = me.getX()/bok_pola;
                 int y = me.getY()/bok_pola;
-
+                if(!naplanszy(x,y))return;
 
                 if(pola[x][y].czyzajete() == 1)       //na pionek
                 {
@@ -135,7 +137,7 @@ public class Plansza extends JComponent
 
     private boolean naplanszy(int x, int y)
     {
-        return x>=0 && x<8 && y>=0 && y<8;
+        return x>=1 && x<ip-1 && y>=1 && y<ip-1;
     }
 
     private boolean czybicie(int x, int y,int strona, int kierunek)
@@ -214,9 +216,9 @@ public class Plansza extends JComponent
 
     private void rysujPlansze(Graphics g)
     {
-        for (int i =0;i<8;i++)
+        for (int i =0;i<ip;i++)
         {
-            for(int j=0;j<8;j++)
+            for(int j=0;j<ip;j++)
             {
                 pola[i][j].draw(g);
             }
