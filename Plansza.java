@@ -214,7 +214,8 @@ public class Plansza extends JComponent
         {
             if(pio.czyzbity() == 0)
             {
-                if(!pio.inanim)pio.draw(g);
+                if(!pio.isInanim())pio.draw(g);
+                else pio.drawonpoint(g);
             }
         }
     }
