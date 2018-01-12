@@ -215,9 +215,10 @@ public class Plansza extends JComponent
             if(pio.czyzbity() == 0)
             {
                 if(!pio.isInanim())pio.draw(g);
-                else pio.drawonpoint(g);
+                //else pio.drawonpoint(g);
             }
         }
+        for(Pionek pio : pionki)if(pio.isInanim())pio.drawonpoint(g);
     }
 
     private void rysujPlansze(Graphics g)

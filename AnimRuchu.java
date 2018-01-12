@@ -10,7 +10,7 @@ public class AnimRuchu extends JComponent implements Runnable {
     private int bok_pola;
     private Thread animator;
     private int x,y,nx,ny;
-    Pionek pionek;
+    Pionek pionek,zbijany;
     Plansza plansza;
 
     public AnimRuchu(Pionek pio, int nx, int ny, Plansza plansza, int bok_pola)
@@ -22,7 +22,12 @@ public class AnimRuchu extends JComponent implements Runnable {
         this.nx = nx*bok_pola;
         this.ny = ny*bok_pola;
         this.bok_pola = bok_pola;
+        this.zbijany = null;
         animator = new Thread(this);
+    }
+    public void setzbijany(Pionek zbijany)
+    {
+        this.zbijany = zbijany;
     }
 
     public void begin()
@@ -67,7 +72,7 @@ public class AnimRuchu extends JComponent implements Runnable {
         pionek.setY(y/bok_pola);
         pionek.setInanim(false);
         //System.out.println(pionek.isInanim());
-
+        if(zbijany!=null)zbijany.setZbity(1);
         plansza.repaint();
         //Thread.currentThread().interrupt();
 

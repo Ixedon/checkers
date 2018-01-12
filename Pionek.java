@@ -78,6 +78,7 @@ public class Pionek {
         //this.y = y;
         this.inanim = true;
         AnimRuchu anim = new AnimRuchu(this,x,y,plansza,bok_pola);
+        anim.setzbijany(pole.getZbijany());
         anim.begin();
 
         this.pole = pole;
@@ -96,6 +97,7 @@ public class Pionek {
     {
         //pola[(this.x + x)/2][(this.y + y)/2].getPionek().zbij();
         przesun( x, y, pola[x][y],plansza);
+
         //pola [x][y].getZbijany()
         pola [x][y].getZbijany().zbij(pola,plansza);
 
@@ -104,9 +106,16 @@ public class Pionek {
     public void zbij(Pole [][] pola, Plansza plansza)
     {
        // this.zbity = 1;
-        przesun(0, 0, pola[x][y],plansza);
+       // przesun(0, 0, pola[x][y],plansza);
+
+        //this.x = 0;
+        //this.y = 0;
+
         this.pole.usun();
     }
+
+    public void setZbity(int zbity) {this.zbity = zbity;}
+
     public int czyzbity(){return this.zbity;}
     public int czydamka(){return this.damka;}
     public int getKolor(){return this.kolor;}
