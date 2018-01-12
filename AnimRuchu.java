@@ -12,6 +12,7 @@ public class AnimRuchu extends JComponent implements Runnable {
     private int x,y,nx,ny;
     Pionek pionek,zbijany;
     Plansza plansza;
+    private static int sleep = 5;
 
     public AnimRuchu(Pionek pio, int nx, int ny, Plansza plansza, int bok_pola)
     {
@@ -62,7 +63,7 @@ public class AnimRuchu extends JComponent implements Runnable {
 
             plansza.repaint();
             try {
-                Thread.sleep(5);
+                Thread.sleep(sleep);
             } catch (InterruptedException e) {
                 System.out.println("Interrupted: " + e.getMessage());
             }
@@ -73,6 +74,7 @@ public class AnimRuchu extends JComponent implements Runnable {
         pionek.setInanim(false);
         //System.out.println(pionek.isInanim());
         if(zbijany!=null)zbijany.setZbity(1);
+        pionek.checkdamka();
         plansza.repaint();
         //Thread.currentThread().interrupt();
 

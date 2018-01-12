@@ -20,7 +20,7 @@ public class Plansza extends JComponent
 {
 
     private static int bok_planszy = 500;
-    private int ip = 8 + 2;
+    private int ip = 6 + 2;
     private  int bok_pola = bok_planszy/ip;
 
 

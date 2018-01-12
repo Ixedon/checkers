@@ -80,18 +80,25 @@ public class Pionek {
         AnimRuchu anim = new AnimRuchu(this,x,y,plansza,bok_pola);
         anim.setzbijany(pole.getZbijany());
         anim.begin();
+        System.out.println("Start");
 
         this.pole = pole;
         this.pole.wstaw(this);
-
-        if(kolor == 1 && this.y == this.ip-1 || kolor == -1 && this.y == 1)
-        {
-            this.damka = 1;
-        }
+        //System.out.println();
        // plansza.repaint();
 
 
     }
+
+    public void checkdamka()
+    {
+        if(kolor == 1 && this.y == this.ip-1 || kolor == -1 && this.y == 1)
+        {
+            this.damka = 1;
+            System.out.println(1);
+        }
+    }
+
 
     public void bij(int x, int y, Pole [][] pola, Plansza plansza)
     {
