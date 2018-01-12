@@ -30,6 +30,7 @@ public class Plansza extends JComponent
     private Pole selected;
     private List<Pole>mozliwosci;
     private List<Pole>mozbicia;
+    Plansza plansza;
 
     public Plansza()
     {
@@ -38,6 +39,7 @@ public class Plansza extends JComponent
         mozliwosci = new ArrayList<>();
         mozbicia = new ArrayList<>();
         pola = new Pole[ip][ip];
+        plansza = this;
 
         Pionek pionek;
 
@@ -106,12 +108,12 @@ public class Plansza extends JComponent
                 else if(selected != null && pola[x][y].czymozliwe() == 1)    //na puste pole
                 {
                     decolor();
-                    selected.getPionek().przesun(x,y,pola[x][y]);
+                    selected.getPionek().przesun(x,y,pola[x][y],plansza);
                 }
                 else if(selected !=null && pola[x][y].czybicie() == 1)           //bicie
                 {
                     decolor();
-                    selected.getPionek().bij(x,y,pola);
+                    selected.getPionek().bij(x,y,pola, plansza);
 
                 }
 
@@ -210,7 +212,10 @@ public class Plansza extends JComponent
         rysujPlansze(g);
         for(Pionek pio : pionki)
         {
-            if(pio.czyzbity() == 0) pio.draw(g);
+            if(pio.czyzbity() == 0)
+            {
+                if(!pio.inanim)pio.draw(g);
+            }
         }
     }
 
