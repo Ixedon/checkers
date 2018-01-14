@@ -2,19 +2,13 @@ package com.warcaby;
 
 
 
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.SwingUtilities;
-import javax.swing.SwingWorker;
+import javax.swing.*;
 
 public class gra extends JFrame {
 
@@ -22,9 +16,17 @@ public class gra extends JFrame {
         super(title);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        Plansza plansza = new Plansza();
+        setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
-        setContentPane(plansza);
+        Plansza plansza = new Plansza();
+        //PomiarCzasu timer = new PomiarCzasu(plansza.getPreferredSize().width);
+        PasekCzasu pasek = new PasekCzasu();
+       // add(timer);
+        add(pasek);
+        add (plansza);
+
+       // timer.begin();
+        //setContentPane(plansza);
         pack();
         setResizable(false);
         setVisible(true);

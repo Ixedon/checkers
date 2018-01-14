@@ -10,6 +10,7 @@ public class Pionek {
     private static int bok_pola;
     private int kolor;
     private int x,y;
+    private int xp, yp;
     private int typ;
     private int zbity;
     private int zbijany;
@@ -57,30 +58,31 @@ public class Pionek {
         int roz = (bok_pola - srednica)/2;
         int obw = 4;
         g.setColor(Color.WHITE);
-        g.fillOval(x + roz-obw/2, y + roz-obw/2 , srednica+obw, srednica+obw);
+        g.fillOval(xp + roz-obw/2, yp + roz-obw/2 , srednica+obw, srednica+obw);
 
         if(kolor==-1) g.setColor(Color.RED);
         else g.setColor(Color.DARK_GRAY);
-        g.fillOval(x + roz, y + roz , srednica, srednica);
+        g.fillOval(xp + roz, yp + roz , srednica, srednica);
 
         if(damka == 1)
         {
             g.setColor(Color.YELLOW);
-            g.fillOval(x + roz + srednica/4, y + roz + srednica/4 , srednica-srednica/2, srednica-srednica/2);
+            g.fillOval(xp + roz + srednica/4, yp + roz + srednica/4 , srednica-srednica/2, srednica-srednica/2);
         }
 
     }
 
-    public void przesun(int x, int y, Pole pole, Plansza plansza)
+    public void przesun(int x, int y, Pole pole, Plansza plansza, boolean bicie)
     {
         this.pole.usun();
        // this.x = x;
         //this.y = y;
         this.inanim = true;
         AnimRuchu anim = new AnimRuchu(this,x,y,plansza,bok_pola);
-        anim.setzbijany(pole.getZbijany());
+        if(bicie) anim.setzbijany(pole.getZbijany());
+        else anim.setzbijany(null);
         anim.begin();
-        System.out.println("Start");
+        //System.out.println("Start");
 
         this.pole = pole;
         this.pole.wstaw(this);
@@ -103,7 +105,7 @@ public class Pionek {
     public void bij(int x, int y, Pole [][] pola, Plansza plansza)
     {
         //pola[(this.x + x)/2][(this.y + y)/2].getPionek().zbij();
-        przesun( x, y, pola[x][y],plansza);
+        przesun( x, y, pola[x][y],plansza,true);
 
         //pola [x][y].getZbijany()
         pola [x][y].getZbijany().zbij(pola,plansza);
@@ -128,9 +130,9 @@ public class Pionek {
     public int getKolor(){return this.kolor;}
 
 
-
-    public void setX(int x) {this.x = x;}
-    public void setY(int y) {this.y = y;}
+    public void setXY(int x, int y) {this.x = x; this.y =y;}
+    public void setX(int x) {this.xp = x;}
+    public void setY(int y) {this.yp = y;}
     public int getY() {return y;}
     public int getX() {return x;}
 

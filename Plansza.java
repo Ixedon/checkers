@@ -108,7 +108,7 @@ public class Plansza extends JComponent
                 else if(selected != null && pola[x][y].czymozliwe() == 1)    //na puste pole
                 {
                     decolor();
-                    selected.getPionek().przesun(x,y,pola[x][y],plansza);
+                    selected.getPionek().przesun(x,y,pola[x][y],plansza,false);
                 }
                 else if(selected !=null && pola[x][y].czybicie() == 1)           //bicie
                 {
