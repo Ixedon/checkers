@@ -20,7 +20,7 @@ public class Plansza extends JComponent
 {
 
     private static int bok_planszy = 500;
-    private int ip = 6 + 2;
+    private int ip = 8 + 2;
     private  int bok_pola = bok_planszy/ip;
 
 
@@ -76,6 +76,8 @@ public class Plansza extends JComponent
                 int x = me.getX()/bok_pola;
                 int y = me.getY()/bok_pola;
                 if(!naplanszy(x,y))return;
+
+                
 
                 if(pola[x][y].czyzajete() == 1)       //na pionek
                 {
