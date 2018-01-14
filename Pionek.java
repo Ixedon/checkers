@@ -18,8 +18,9 @@ public class Pionek {
     private int ip;
     private boolean inanim;
     private Pole pole;
+    private Color col;
 
-    public Pionek(int kolor,int x,int y, Pole pole, int bok_pola, int ip)
+    public Pionek(int kolor,int x,int y, Pole pole, int bok_pola, int ip, Color col)
     {
         this.kolor = kolor;
         this.x = x;
@@ -31,6 +32,7 @@ public class Pionek {
         this.ip = ip-1;
         this.bok_pola = bok_pola;
         this.pole = pole;
+        this.col = col;
         srednica = (int) (bok_pola * 0.8);
     }
 
@@ -41,8 +43,9 @@ public class Pionek {
         g.setColor(Color.WHITE);
         g.fillOval(x*bok_pola + roz-obw/2, y*bok_pola + roz-obw/2 , srednica+obw, srednica+obw);
 
-        if(kolor==-1) g.setColor(Color.RED);
-        else g.setColor(Color.DARK_GRAY);
+//        if(kolor==-1) g.setColor(Color.RED);
+//        else g.setColor(Color.DARK_GRAY);
+        g.setColor(col);
         g.fillOval(x*bok_pola + roz, y*bok_pola + roz , srednica, srednica);
 
         if(damka == 1)

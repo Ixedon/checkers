@@ -19,7 +19,7 @@ public class PasekCzasu extends JPanel {
         add(timer);
         timer.begin();
 
-        JTextField jtxt = new JTextField("00",2);
+        JTextField jtxt = new JTextField("03",2);
         add(jtxt);
         JLabel label3 = new JLabel(":");
         add(label3);

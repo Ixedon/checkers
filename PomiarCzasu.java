@@ -67,11 +67,11 @@ public class PomiarCzasu extends JComponent implements Runnable
     public void run() {
         while (true) {
             try {
-                Thread.sleep(50);
+                Thread.sleep(25);
             } catch (InterruptedException e) {
                 System.out.println("Interrupted: " + e.getMessage());
             }
-            milisekundy+=50;
+            milisekundy+=25;
             if(milisekundy == 1000){sekundy+=1;milisekundy = 0;}
             if(sekundy == 60){minuty+=1;sekundy = 0;}
 
