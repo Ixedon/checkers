@@ -36,7 +36,7 @@ public class PomiarCzasu extends JComponent implements Runnable
         width += g.getFontMetrics().stringWidth(text);
 
         g.setFont(new Font("default", Font.ITALIC, 12));
-        String wynik =  str(minuty)+":"+str(sekundy) + ":"+str( milisekundy/10);
+        String wynik =  str(minuty)+":"+str(sekundy) ;//+ ":"+str( milisekundy/10);
         g.drawString(wynik,width,15);
         width += g.getFontMetrics().stringWidth(wynik) + 20;
 
