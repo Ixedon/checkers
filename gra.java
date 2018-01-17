@@ -14,14 +14,14 @@ import javax.swing.*;
 
 public class gra extends JFrame {
 
-    public gra(String title, MainMenu menu, int size, Kolory kol) {
+    public gra(String title, MainMenu menu, int size, Kolory kol, boolean komp) {
         super(title);
         //setDefaultCloseOperation(EXIT_ON_CLOSE);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
-        Plansza plansza = new Plansza(size,kol);
+        Plansza plansza = new Plansza(size,kol,komp);
         //PomiarCzasu timer = new PomiarCzasu(plansza.getPreferredSize().width);
         PasekCzasu pasek = new PasekCzasu();
        // add(timer);

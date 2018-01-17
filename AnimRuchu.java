@@ -66,6 +66,7 @@ public class AnimRuchu extends JComponent implements Runnable {
        // System.out.println("End");
        pionek.setXY(x/bok_pola, y/bok_pola);
         pionek.setInanim(false);
+        Plansza.inanim = true;
        // System.out.println(pionek.isInanim());
         if(zbijany!=null)zbijany.setZbity(1);
         //System.out.println(pionek.czyzbity());

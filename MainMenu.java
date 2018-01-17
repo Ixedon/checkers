@@ -11,10 +11,12 @@ public class MainMenu extends JFrame{
 
     private int size;
     private Kolory kol;
+    private boolean komp;
     public MainMenu(String name)
     {
         super(name);
         this.size = 8;
+        komp = false;
         kol = new Kolory();
         kol.c1 = Color.RED;
         kol.c2 = Color.DARK_GRAY;
@@ -67,7 +69,7 @@ public class MainMenu extends JFrame{
         optPane.add(label2);
         String[] kolory = {"Red-Black", "White-Red", "White-Black"};
         JComboBox kolor = new JComboBox(kolory);
-        kolor.setSelectedIndex(2);
+        kolor.setSelectedIndex(0);
         optPane.add(kolor);
 
 
@@ -88,9 +90,12 @@ public class MainMenu extends JFrame{
                 size = Integer.parseInt(parts[0]);
 
                 s = String.valueOf(kolor.getSelectedItem());
-                if(s == "Red-Black"){kol.c1 = Color.RED; kol.c2 = Color.DARK_GRAY;}
-                if(s == "White-Red"){kol.c1 = Color.LIGHT_GRAY; kol.c2 = Color.RED;}
-                if(s == "White-Black"){kol.c1 = Color.LIGHT_GRAY; kol.c2 = Color.DARK_GRAY;}
+                if(s == "Red-Black"){kol.c2 = Color.RED; kol.c1 = Color.DARK_GRAY;}
+                if(s == "White-Red"){kol.c2 = Color.LIGHT_GRAY; kol.c1 = Color.RED;}
+                if(s == "White-Black"){kol.c2 = Color.LIGHT_GRAY; kol.c1 = Color.DARK_GRAY;}
+
+                komp = jradio2.isSelected();
+
 
                 options.setVisible(false);
             }
@@ -98,7 +103,7 @@ public class MainMenu extends JFrame{
 
         start.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-              gra gra1 = new gra("Warcaby",menu,size ,kol);
+              gra gra1 = new gra("Warcaby",menu,size ,kol, komp);
               setVisible(false);
             }
         });

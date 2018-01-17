@@ -82,6 +82,7 @@ public class Pionek {
        // this.x = x;
         //this.y = y;
         this.inanim = true;
+        Plansza.inanim = true;
         AnimRuchu anim = new AnimRuchu(this,x,y,plansza,bok_pola);
         if(bicie) anim.setzbijany(pole.getZbijany());
         else anim.setzbijany(null);

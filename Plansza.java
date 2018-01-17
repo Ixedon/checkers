@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import javax.swing.JComponent;
+import java.util.Random;
 
 public class Plansza extends JComponent
 {
@@ -33,13 +34,15 @@ public class Plansza extends JComponent
     private List<Ruch>wszmozliwosci;
     private List<Ruch>wszmozbicia;
     private int aktKolor;
+    private boolean komp;
     Plansza plansza;
-
-    public Plansza(int size, Kolory kol)
+    Kolory kol;
+    public static boolean inanim = false;
+    public Plansza(int size, Kolory kol, boolean komp)
     {
         ip = size + 2;
         bok_pola = bok_planszy/ip;
-        prefRozmiar = new Dimension(bok_planszy/*+2*bok_pola*/, bok_planszy/*+2*bok_pola*/);
+        prefRozmiar = new Dimension(bok_planszy, bok_planszy);
         pionki = new ArrayList<>();
         mozliwosci = new ArrayList<>();
         mozbicia = new ArrayList<>();
@@ -48,7 +51,9 @@ public class Plansza extends JComponent
         pola = new Pole[ip][ip];
         plansza = this;
         aktKolor = -1;
-
+        this.komp = komp;
+        this.kol = kol;
+        Pole.col = kol.c2;
         Pionek pionek;
 
         for (int i=0;i<ip;i++)
@@ -77,77 +82,91 @@ public class Plansza extends JComponent
 
         addMouseListener(new MouseAdapter() {
             @Override
-            public void mousePressed (MouseEvent me)
-            {
+            public void mousePressed (MouseEvent me) {
                 // Obtain mouse coordinates at time of press.
 
-                int x = me.getX()/bok_pola;
-                int y = me.getY()/bok_pola;
-                if(!naplanszy(x,y))return;
-                wszruchy();
-
-
-                if(pola[x][y].czyzajete() == 1 && czytura(pola[x][y].getPionek()))       //na pionek
+                int x=0,y=0;
+                if( !(komp && aktKolor == 1))
                 {
-
-                    if(selected !=null) {selected.deselect(); selected = null;}
-                    decolor();
-                    selected = pola[x][y];
-                    int kolor = selected.getPionek().getKolor();
-                    pola[x][y].select();
-
-                    if(pola[x][y].getPionek().czydamka()== 0)
-                    {
-                        int kierunek = pola[x][y].getPionek().getKolor();
-
-                        bicie(x,y,1,kierunek, true);
-                        bicie(x,y,-1,kierunek, true);
-                        bicie(x,y,1,-kierunek, true);
-                        bicie(x,y,-1,-kierunek, true);
-
-                        if(wszmozbicia.size() == 0)
-                        {
-                            ruch(x,y,1,kierunek, true);
-                            ruch(x,y,-1,kierunek, true);
-                        }
-                    }
-                    else
-                    {
-                        ruchdamka(x,y,1,1, true, kolor);
-                        ruchdamka(x,y,-1,1, true, kolor);
-                        ruchdamka(x,y,1,-1, true, kolor);
-                        ruchdamka(x,y,-1,-1, true, kolor);
-                    }
-
-                }
-                else if(selected != null && pola[x][y].czymozliwe() == 1)    //na puste pole
-                {
-                    decolor();
-                    selected.getPionek().przesun(x,y,pola[x][y],plansza,false);
-                    System.out.println(wszmozbicia.size());
-                    aktKolor = - aktKolor;
-                    wszdecolor();
-                }
-                else if(selected !=null && pola[x][y].czybicie() == 1)           //bicie
-                {
-                    selected.getPionek().bij(x,y,pola, plansza);
-                    System.out.println(wszmozbicia.size());
-                    wszdecolor();
+                    x= me.getX() / bok_pola;
+                    y= me.getY() / bok_pola;
+                    if (!naplanszy(x, y)) return;
                     wszruchy();
-                    if(wszmozbicia.size() <  1) {
-                        aktKolor = -aktKolor;
-                        wszdecolor();
-                    }
-                    decolor();
 
+                    ruchy(x, y);
                 }
 
-
-                repaint();
             }
-
         });
 
+    }
+
+
+    private void ruchy(int x, int y)
+    {
+        if(pola[x][y].czyzajete() == 1 && czytura(pola[x][y].getPionek()))       //na pionek
+        {
+
+            if(selected !=null) {selected.deselect(); selected = null;}
+            decolor();
+            selected = pola[x][y];
+            int kolor = selected.getPionek().getKolor();
+            pola[x][y].select();
+
+            if(pola[x][y].getPionek().czydamka()== 0)
+            {
+                int kierunek = pola[x][y].getPionek().getKolor();
+
+                bicie(x,y,1,kierunek, true);
+                bicie(x,y,-1,kierunek, true);
+                bicie(x,y,1,-kierunek, true);
+                bicie(x,y,-1,-kierunek, true);
+
+                if(wszmozbicia.size() == 0)
+                {
+                    ruch(x,y,1,kierunek, true);
+                    ruch(x,y,-1,kierunek, true);
+                }
+            }
+            else
+            {
+                ruchdamka(x,y,1,1, true, kolor);
+                ruchdamka(x,y,-1,1, true, kolor);
+                ruchdamka(x,y,1,-1, true, kolor);
+                ruchdamka(x,y,-1,-1, true, kolor);
+            }
+
+        }
+        else if(selected != null && pola[x][y].czymozliwe() == 1)    //na puste pole
+        {
+            decolor();
+            selected.getPionek().przesun(x,y,pola[x][y],plansza,false);
+            System.out.println(wszmozbicia.size());
+            aktKolor = - aktKolor;
+            if(aktKolor == 1)Pole.col = kol.c1;
+            else Pole.col = kol.c2;
+            wszdecolor();
+            if(komp && aktKolor == 1)komuter();
+        }
+        else if(selected !=null && pola[x][y].czybicie() == 1)           //bicie
+        {
+            selected.getPionek().bij(x,y,pola, plansza);
+            System.out.println(wszmozbicia.size());
+            wszdecolor();
+            wszruchy();
+            decolor();
+            if(wszmozbicia.size() <  1) {
+                aktKolor = -aktKolor;
+                if(aktKolor == 1)Pole.col = kol.c1;
+                else Pole.col = kol.c2;
+                wszdecolor();
+                if(komp && aktKolor == 1)komuter();
+            }
+
+        }
+
+
+        repaint();
     }
 
 
@@ -184,6 +203,23 @@ public class Plansza extends JComponent
                 }
             }
         }
+    }
+
+    private  void komuter()
+    {
+        Random rand = new Random();
+        Ruch r;
+        wszruchy();
+        if(wszmozbicia.size() == 0)
+        {
+
+            r = wszmozliwosci.get(rand.nextInt(wszmozliwosci.size()));
+        }
+        else r = wszmozbicia.get(rand.nextInt(wszmozbicia.size()));
+
+        ruchy(r.pocz.getX(),r.pocz.getY());
+        ruchy(r.kon.getX(),r.kon.getY());
+
     }
 
 
@@ -278,8 +314,6 @@ public class Plansza extends JComponent
             y+=kierunek;
         }
     }
-
-
 
 
 
