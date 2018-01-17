@@ -75,7 +75,7 @@ public class PomiarCzasu extends JComponent implements Runnable
             if(milisekundy == 1000){sekundy+=1;milisekundy = 0;}
             if(sekundy == 60){minuty+=1;sekundy = 0;}
 
-            if(timeron && milisekundy == 0)
+            if(timeron && milisekundy == 0 && currsek+currmin > 0)
             {
                 currsek -=1;
                 if(currsek < 0){currsek +=60; currmin -=1;}

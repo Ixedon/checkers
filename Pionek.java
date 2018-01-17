@@ -63,8 +63,9 @@ public class Pionek {
         g.setColor(Color.WHITE);
         g.fillOval(xp + roz-obw/2, yp + roz-obw/2 , srednica+obw, srednica+obw);
 
-        if(kolor==-1) g.setColor(Color.RED);
-        else g.setColor(Color.DARK_GRAY);
+//        if(kolor==-1) g.setColor(Color.RED);
+//        else g.setColor(Color.DARK_GRAY);
+        g.setColor(col);
         g.fillOval(xp + roz, yp + roz , srednica, srednica);
 
         if(damka == 1)
