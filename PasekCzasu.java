@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 import static java.lang.Integer.parseInt;
 
 
-public class PasekCzasu extends JPanel {
+public class PasekCzasu extends JPanel {  //pasek do pomiaru czasu
     private JButton button;
     private int minuty;
     private int sekundy;
@@ -17,7 +17,7 @@ public class PasekCzasu extends JPanel {
         setLayout(new FlowLayout());
         PomiarCzasu timer = new PomiarCzasu(gr,menu);
         add(timer);
-        timer.begin();
+        timer.begin();                            //rozpoczecie liczenia
 
         JTextField jtxt = new JTextField("05",2);
         add(jtxt);
@@ -29,7 +29,7 @@ public class PasekCzasu extends JPanel {
         button = new JButton("Start");
         add(button);
 
-        button.addActionListener(new ActionListener() {
+        button.addActionListener(new ActionListener() {    //rozpoczecie timera
             public void actionPerformed(ActionEvent evt) {
             minuty = parseInt(jtxt.getText());
             sekundy = parseInt(jtxt2.getText());

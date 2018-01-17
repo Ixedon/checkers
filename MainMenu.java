@@ -16,7 +16,7 @@ public class MainMenu extends JFrame{
     private Kolory kol;
     private boolean komp;
     private Image image;
-    public MainMenu(String name)
+    public MainMenu(String name)    //menu glowne
     {
         super(name);
         this.size = 8;
@@ -25,7 +25,7 @@ public class MainMenu extends JFrame{
         kol.c1 = Color.RED;
         kol.c2 = Color.DARK_GRAY;
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        JPanel listPane = new JPanel();
+        JPanel listPane = new JPanel();               //okno glowne
 
 //        try {
 //            image = ImageIO.read(new File("background.jpg"));
@@ -44,7 +44,6 @@ public class MainMenu extends JFrame{
         setSize(new Dimension(200,200));
         listPane.setLayout(new BoxLayout(listPane, BoxLayout.Y_AXIS));
         listPane.add(Box.createRigidArea(new Dimension(0,15)));
-        //listPane.add(Box.createHorizontalGlue());
 
         JButton start = new JButton("Start game");
         start.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -60,7 +59,7 @@ public class MainMenu extends JFrame{
 
 
 
-        JFrame options;
+        JFrame options;                              //okienko opcji
         options  = new JFrame("Options");
         options.setSize(new Dimension(250,200));
 
@@ -72,18 +71,18 @@ public class MainMenu extends JFrame{
         optPane.add(jradio1);
         optPane.add(jradio2);
 
-        ButtonGroup group = new ButtonGroup();
+        ButtonGroup group = new ButtonGroup();   //wybor trybu gry
         group.add(jradio1);
         group.add(jradio2);
 
-        JLabel label = new JLabel("Select board size");
+        JLabel label = new JLabel("Select board size");   //wybor rozmiaru planszy
         optPane.add(label);
         String[] sizes = { "4x4", "6x6", "8x8","10x10", "12x12" };
         JComboBox rozmiary = new JComboBox(sizes);
         rozmiary.setSelectedIndex(2);
         optPane.add(rozmiary);
 
-        JLabel label2 = new JLabel("Select color");
+        JLabel label2 = new JLabel("Select color");           //wybor koloru
         optPane.add(label2);
         String[] kolory = {"Red-Black", "White-Red", "White-Black"};
         JComboBox kolor = new JComboBox(kolory);
@@ -103,7 +102,7 @@ public class MainMenu extends JFrame{
         setContentPane(listPane);
         setVisible(true);
 
-        submit.addActionListener(new ActionListener() {
+        submit.addActionListener(new ActionListener() {              //submit opcji
             public void actionPerformed(ActionEvent evt) {
                 String s = String.valueOf(rozmiary.getSelectedItem());
                 String[] parts = s.split("x");
@@ -121,20 +120,20 @@ public class MainMenu extends JFrame{
             }
         });
 
-        start.addActionListener(new ActionListener() {
+        start.addActionListener(new ActionListener() {         //wcisniecie start
             public void actionPerformed(ActionEvent evt) {
               gra gra1 = new gra("Warcaby",menu,size ,kol, komp);
               setVisible(false);
             }
         });
 
-        optb.addActionListener(new ActionListener() {
+        optb.addActionListener(new ActionListener() {   //optwarcie opcji
             public void actionPerformed(ActionEvent evt) {
                 options.setVisible(true);
             }
         });
 
-        close.addActionListener(new ActionListener() {
+        close.addActionListener(new ActionListener() {  //wyjscie
             public void actionPerformed(ActionEvent evt) {
                 menu.dispose();
             }
@@ -145,7 +144,7 @@ public class MainMenu extends JFrame{
     }
 
     public static void main(String[] args) {
-       MainMenu menu = new MainMenu("Menu");
+       MainMenu menu = new MainMenu("Menu");   //stworzenie opcji
     }
 }
 

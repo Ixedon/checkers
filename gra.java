@@ -16,20 +16,14 @@ public class gra extends JFrame {
 
     public gra(String title, MainMenu menu, int size, Kolory kol, boolean komp) {
         super(title);
-        //setDefaultCloseOperation(EXIT_ON_CLOSE);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
-        Plansza plansza = new Plansza(size,kol,komp, this, menu);
-        //PomiarCzasu timer = new PomiarCzasu(plansza.getPreferredSize().width);
-        PasekCzasu pasek = new PasekCzasu(this, menu);
-       // add(timer);
+        Plansza plansza = new Plansza(size, kol, komp, this, menu);  //tworzeni planszy
+        PasekCzasu pasek = new PasekCzasu(this, menu);  //tworeznie pasku
         add(pasek);
-        add (plansza);
-
-       // timer.begin();
-        //setContentPane(plansza);
+        add(plansza);
         pack();
         setResizable(false);
         setVisible(true);
@@ -40,23 +34,10 @@ public class gra extends JFrame {
 
             @Override
             public void windowClosing(WindowEvent e) {
-//                if(JOptionPane.showConfirmDialog(frame, "Are you sure ?") == JOptionPane.OK_OPTION){
-//                    frame.setVisible(false);
-//                    frame.dispose();
-            //}
-                menu.setVisible(true);
+
+                menu.setVisible(true);  //wyjscie do menu
             }
         });
 
     }
-
-//    public static void main(String[] args) {
-//        SwingUtilities.invokeLater(new Runnable() {
-//
-//            @Override
-//            public void run() {
-//                new gra("Warcaby");
-//            }
-//        });
-//    }
 }

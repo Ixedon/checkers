@@ -3,7 +3,7 @@ package com.warcaby;
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class Pole {
+public class Pole {  //stworzeie parametrow pol
     private int x,y;
     private int bok_pola;
     private int selected;
@@ -29,14 +29,14 @@ public class Pole {
     }
     public void draw(Graphics g)
     {
-        if(obwod == true)g.setColor(col);   //g.setColor(new Color(200, 130, 24));
-        else if(selected == 1) g.setColor(Color.BLUE);
+        if(obwod == true)g.setColor(col);   //g.setColor(new Color(200, 130, 24));        //kolor obwodki
+        else if(selected == 1) g.setColor(Color.BLUE);                                   //wybor koloru
         else if(mozliwe == 1) g.setColor(Color.GREEN);
         else if(bicie == 1) g.setColor(Color.RED);
         else if((x+y)%2==1)g.setColor(Color.BLACK);
         else g.setColor(Color.WHITE);
         g.fillRect(x*bok_pola, y*bok_pola, bok_pola, bok_pola);
-    }
+    }                                                                           //zwracanie i ustawiwanie parametrow
     public void select() {this.selected=1;}
     public void deselect() {this.selected=0;}
 

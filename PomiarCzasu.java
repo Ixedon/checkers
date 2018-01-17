@@ -32,7 +32,7 @@ public class PomiarCzasu extends JComponent implements Runnable
         this.menu = menu;
     }
     @Override
-    public void paintComponent (Graphics g) {
+    public void paintComponent (Graphics g) {             //wypisywanei czasu
       //  super.paintComponent(g);
         int width = 0;
         g.setFont(new Font("default", Font.BOLD, 12));
@@ -57,7 +57,7 @@ public class PomiarCzasu extends JComponent implements Runnable
 
     }
 
-    public void  settimer(int startmin, int startsek)
+    public void  settimer(int startmin, int startsek)    //rozpoczecie timera
     {
         timeron = true;
         this.currsek = startsek;
@@ -73,20 +73,20 @@ public class PomiarCzasu extends JComponent implements Runnable
     public void run() {
         while (true) {
             try {
-                Thread.sleep(25);
+                Thread.sleep(25);                      //czekanei
             } catch (InterruptedException e) {
                 System.out.println("Interrupted: " + e.getMessage());
             }
-            milisekundy+=25;
+            milisekundy+=25;                                        //aktualizacja licznika
             if(milisekundy == 1000){sekundy+=1;milisekundy = 0;}
             if(sekundy == 60){minuty+=1;sekundy = 0;}
 
-            if(timeron && milisekundy == 0 && currsek+currmin > 0)
+            if(timeron && milisekundy == 0 && currsek+currmin > 0)         //aktualizacja timera
             {
                 currsek -=1;
                 if(currsek < 0){currsek +=60; currmin -=1;}
             }
-            if(currsek+currmin == 0 && koniec)
+            if(currsek+currmin == 0 && koniec)    //wyjscie na koniec czasu
             {
                 JOptionPane.showMessageDialog(new JFrame(),
                         "End of time limit." +

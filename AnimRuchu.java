@@ -5,7 +5,7 @@ import java.awt.Graphics;
 
 import static java.lang.Math.abs;
 
-public class AnimRuchu extends JComponent implements Runnable {
+public class AnimRuchu extends JComponent implements Runnable {  //watek animacji
 
     private int bok_pola;
     private Thread animator;
@@ -14,7 +14,7 @@ public class AnimRuchu extends JComponent implements Runnable {
     Plansza plansza;
     private static int sleep = 5;
 
-    public AnimRuchu(Pionek pio, int nx, int ny, Plansza plansza, int bok_pola)
+    public AnimRuchu(Pionek pio, int nx, int ny, Plansza plansza, int bok_pola)  //konstruktor
     {
         this.pionek = pio;
         this.x = pio.getX();
@@ -33,7 +33,7 @@ public class AnimRuchu extends JComponent implements Runnable {
 
     public void begin()
     {
-        animator.start();
+        animator.start();   //poczatek animacji
 
     }
 
@@ -41,10 +41,7 @@ public class AnimRuchu extends JComponent implements Runnable {
 
     @Override
     public void run() {
-
-        //pionek.setX(0);
-        //pionek.setY(0);
-        x = pionek.getX()*bok_pola;
+        x = pionek.getX()*bok_pola;     //opbranie bezwzglednych wspolrzednych
         y = pionek.getY()*bok_pola;
         while (abs(x - nx) > 0 && abs(y-ny) > 0)
         {
@@ -58,21 +55,17 @@ public class AnimRuchu extends JComponent implements Runnable {
 
             plansza.repaint();
             try {
-                Thread.sleep(sleep);
+                Thread.sleep(sleep);     //opzonienie
             } catch (InterruptedException e) {
                 System.out.println("Interrupted: " + e.getMessage());
             }
         }
-       // System.out.println("End");
        pionek.setXY(x/bok_pola, y/bok_pola);
-        pionek.setInanim(false);
+        pionek.setInanim(false);    //koniec animacji
         Plansza.inanim = true;
-       // System.out.println(pionek.isInanim());
         if(zbijany!=null)zbijany.setZbity(1);
-        //System.out.println(pionek.czyzbity());
-        pionek.checkdamka();
+        pionek.checkdamka();  //sprawdzenei czy damka
         plansza.repaint();
-        //Thread.currentThread().interrupt();
 
     }
     private  int getsign(int a){

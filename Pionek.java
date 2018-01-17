@@ -20,7 +20,7 @@ public class Pionek {
     private Pole pole;
     private Color col;
 
-    public Pionek(int kolor,int x,int y, Pole pole, int bok_pola, int ip, Color col)
+    public Pionek(int kolor,int x,int y, Pole pole, int bok_pola, int ip, Color col)  //operacje pionka
     {
         this.kolor = kolor;
         this.x = x;
@@ -36,15 +36,13 @@ public class Pionek {
         srednica = (int) (bok_pola * 0.8);
     }
 
-    public void draw (Graphics g)
+    public void draw (Graphics g)  //ryswoanei na polu
     {
         int roz = (bok_pola - srednica)/2;
         int obw = 4;
         g.setColor(Color.WHITE);
         g.fillOval(x*bok_pola + roz-obw/2, y*bok_pola + roz-obw/2 , srednica+obw, srednica+obw);
 
-//        if(kolor==-1) g.setColor(Color.RED);
-//        else g.setColor(Color.DARK_GRAY);
         g.setColor(col);
         g.fillOval(x*bok_pola + roz, y*bok_pola + roz , srednica, srednica);
 
@@ -56,15 +54,13 @@ public class Pionek {
 
     }
 
-    public void drawonpoint (Graphics g)
+    public void drawonpoint (Graphics g)   //rysownie n abezwzglednych pozycjach
     {
         int roz = (bok_pola - srednica)/2;
         int obw = 4;
         g.setColor(Color.WHITE);
         g.fillOval(xp + roz-obw/2, yp + roz-obw/2 , srednica+obw, srednica+obw);
 
-//        if(kolor==-1) g.setColor(Color.RED);
-//        else g.setColor(Color.DARK_GRAY);
         g.setColor(col);
         g.fillOval(xp + roz, yp + roz , srednica, srednica);
 
@@ -76,28 +72,24 @@ public class Pionek {
 
     }
 
-    public void przesun(int x, int y, Pole pole, Plansza plansza, boolean bicie)
+    public void przesun(int x, int y, Pole pole, Plansza plansza, boolean bicie)    //przesuniecie
     {
         this.pole.usun();
-       // this.x = x;
-        //this.y = y;
         this.inanim = true;
         Plansza.inanim = true;
-        AnimRuchu anim = new AnimRuchu(this,x,y,plansza,bok_pola);
+        AnimRuchu anim = new AnimRuchu(this,x,y,plansza,bok_pola);               //stworzenie animacji
         if(bicie) anim.setzbijany(pole.getZbijany());
         else anim.setzbijany(null);
         anim.begin();
-        //System.out.println("Start");
 
         this.pole = pole;
         this.pole.wstaw(this);
-        //System.out.println();
-       // plansza.repaint();
+
 
 
     }
 
-    public void checkdamka()
+    public void checkdamka()    //sprawdznie czy jest damka
     {
         if(kolor == 1 && this.y == this.ip-1 || kolor == -1 && this.y == 1)
         {
@@ -107,29 +99,21 @@ public class Pionek {
     }
 
 
-    public void bij(int x, int y, Pole [][] pola, Plansza plansza)
+    public void bij(int x, int y, Pole [][] pola, Plansza plansza)   //bicie innego
     {
-        //pola[(this.x + x)/2][(this.y + y)/2].getPionek().zbij();
         przesun( x, y, pola[x][y],plansza,true);
-
-        //pola [x][y].getZbijany()
         pola [x][y].getZbijany().zbij(pola,plansza);
 
     }
 
-    public void zbij(Pole [][] pola, Plansza plansza)
+    public void zbij(Pole [][] pola, Plansza plansza)  //bycie zbitym
     {
-       // this.zbity = 1;
-       // przesun(0, 0, pola[x][y],plansza);
-
-        //this.x = 0;
-        //this.y = 0;
         if(kolor == -1)Plansza.iloscPio1 -=1;
         else Plansza.iloscPio2 -=1;
         this.pole.usun();
     }
 
-    public void setZbity(int zbity) {this.zbity = zbity;}
+    public void setZbity(int zbity) {this.zbity = zbity;}  //parametry
 
     public int czyzbity(){return this.zbity;}
     public int czydamka(){return this.damka;}
