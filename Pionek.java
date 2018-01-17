@@ -124,7 +124,8 @@ public class Pionek {
 
         //this.x = 0;
         //this.y = 0;
-
+        if(kolor == -1)Plansza.iloscPio1 -=1;
+        else Plansza.iloscPio2 -=1;
         this.pole.usun();
     }
 

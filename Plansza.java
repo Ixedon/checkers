@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import javax.swing.JComponent;
+import javax.swing.*;
 import java.util.Random;
 
 public class Plansza extends JComponent
@@ -35,10 +35,13 @@ public class Plansza extends JComponent
     private List<Ruch>wszmozbicia;
     private int aktKolor;
     private boolean komp;
+    public static int iloscPio1, iloscPio2;
     Plansza plansza;
     Kolory kol;
     public static boolean inanim = false;
-    public Plansza(int size, Kolory kol, boolean komp)
+    private MainMenu menu;
+    private gra gr;
+    public Plansza(int size, Kolory kol, boolean komp, gra gr, MainMenu menu)
     {
         ip = size + 2;
         bok_pola = bok_planszy/ip;
@@ -54,6 +57,8 @@ public class Plansza extends JComponent
         this.komp = komp;
         this.kol = kol;
         Pole.col = kol.c2;
+        this.gr = gr;
+        this.menu = menu;
         Pionek pionek;
 
         for (int i=0;i<ip;i++)
@@ -67,6 +72,7 @@ public class Plansza extends JComponent
                     pionek = new Pionek(1, i,j, pola[i][j], bok_pola,ip,kol.c1);
                     pionki.add(pionek);
                     pola[i][j].wstaw(pionek);
+                    iloscPio1+=1;
                 }
 
                 if( naplanszy(i,j) && j>ip/2 && (i+j)%2==1)
@@ -74,6 +80,7 @@ public class Plansza extends JComponent
                     pionek = new Pionek(-1, i,j,pola[i][j], bok_pola,ip,kol.c2);
                     pionki.add(pionek);
                     pola[i][j].wstaw(pionek);
+                    iloscPio2+=1;
                 }
 
 
@@ -102,8 +109,21 @@ public class Plansza extends JComponent
     }
 
 
+    private void zakoncz(boolean kto)
+    {
+        JOptionPane.showMessageDialog(new JFrame(),
+                "End of game." +
+                        (kto ? "Upper player wins" : "Lower player wins"),
+                "Results",
+                JOptionPane.PLAIN_MESSAGE);
+        gr.dispose();
+        menu.setVisible(true);
+    }
+
     private void ruchy(int x, int y)
     {
+        if(Plansza.iloscPio1 <= 0)zakoncz(true);
+        if(Plansza.iloscPio2 <= 0)zakoncz(false);
         if(pola[x][y].czyzajete() == 1 && czytura(pola[x][y].getPionek()))       //na pionek
         {
 
@@ -146,7 +166,7 @@ public class Plansza extends JComponent
             if(aktKolor == 1)Pole.col = kol.c1;
             else Pole.col = kol.c2;
             wszdecolor();
-            if(komp && aktKolor == 1)komuter();
+            if(komp && aktKolor == 1)ruchkomputera();
         }
         else if(selected !=null && pola[x][y].czybicie() == 1)           //bicie
         {
@@ -160,7 +180,7 @@ public class Plansza extends JComponent
                 if(aktKolor == 1)Pole.col = kol.c1;
                 else Pole.col = kol.c2;
                 wszdecolor();
-                if(komp && aktKolor == 1)komuter();
+                if(komp && aktKolor == 1)ruchkomputera();
             }
 
         }
@@ -205,19 +225,30 @@ public class Plansza extends JComponent
         }
     }
 
-    private  void komuter()
+    private void ruchkomputera()
+    {
+        if(Plansza.iloscPio1 <= 0)zakoncz(true);
+        if(Plansza.iloscPio2 <= 0)zakoncz(false);
+        Komputer kmp = new Komputer(this);
+        Thread watkmp = new Thread(kmp);
+        watkmp.start();
+    }
+
+    public void komuter()
     {
         Random rand = new Random();
-        Ruch r;
+        Ruch r=null;
         wszruchy();
         if(wszmozbicia.size() == 0)
         {
 
-            r = wszmozliwosci.get(rand.nextInt(wszmozliwosci.size()));
+            if(wszmozliwosci.size() > 0) r = wszmozliwosci.get(rand.nextInt(wszmozliwosci.size()));
+            else zakoncz(true);
         }
         else r = wszmozbicia.get(rand.nextInt(wszmozbicia.size()));
 
         ruchy(r.pocz.getX(),r.pocz.getY());
+        wszruchy();
         ruchy(r.kon.getX(),r.kon.getY());
 
     }
@@ -295,7 +326,8 @@ public class Plansza extends JComponent
                 else if(c == 1 && zbijany!=null) {                         // bicie
                     System.out.println("eee");
                     if (zaznacz) {pola[x + a][y + b].mozbicie(zbijany); mozbicia.add(pola[x + a][y + b]);}
-                    else {wszmozbicia.add(new Ruch(wszselected, pola[x + a][y + b]));System.out.println("ddd");}
+                    else {wszmozbicia.add(new Ruch(wszselected, pola[x + a][y + b]));
+                        wszmozliwosci.add(new Ruch(wszselected, pola[x + a][y + b]));}
                 }
                 else break;
                 if(zaznacz) mozliwosci.add(pola[x+a][y+b]);

@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
 
 import static java.lang.Integer.parseInt;
 
@@ -12,6 +15,7 @@ public class MainMenu extends JFrame{
     private int size;
     private Kolory kol;
     private boolean komp;
+    private Image image;
     public MainMenu(String name)
     {
         super(name);
@@ -22,6 +26,20 @@ public class MainMenu extends JFrame{
         kol.c2 = Color.DARK_GRAY;
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         JPanel listPane = new JPanel();
+
+//        try {
+//            image = ImageIO.read(new File("background.jpg"));
+//        } catch (IOException ex) {
+//            // handle exception...
+//        }
+//        JPanel imagePlanel = new JPanel()
+//        {
+//            @Override
+//            public void paintComponent(Graphics g)
+//            {
+//                g.drawImage(image, 0, 0, null);
+//            }
+//        };
 
         setSize(new Dimension(200,200));
         listPane.setLayout(new BoxLayout(listPane, BoxLayout.Y_AXIS));
@@ -80,6 +98,8 @@ public class MainMenu extends JFrame{
 
 
         MainMenu menu = this;
+        //add(imagePlanel);
+        //add(listPane);
         setContentPane(listPane);
         setVisible(true);
 

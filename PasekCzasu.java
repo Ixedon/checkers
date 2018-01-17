@@ -12,14 +12,14 @@ public class PasekCzasu extends JPanel {
     private JButton button;
     private int minuty;
     private int sekundy;
-    public PasekCzasu() {
+    public PasekCzasu(gra gr, MainMenu menu) {
 
         setLayout(new FlowLayout());
-        PomiarCzasu timer = new PomiarCzasu();
+        PomiarCzasu timer = new PomiarCzasu(gr,menu);
         add(timer);
         timer.begin();
 
-        JTextField jtxt = new JTextField("03",2);
+        JTextField jtxt = new JTextField("05",2);
         add(jtxt);
         JLabel label3 = new JLabel(":");
         add(label3);

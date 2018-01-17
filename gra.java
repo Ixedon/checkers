@@ -21,9 +21,9 @@ public class gra extends JFrame {
 
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
-        Plansza plansza = new Plansza(size,kol,komp);
+        Plansza plansza = new Plansza(size,kol,komp, this, menu);
         //PomiarCzasu timer = new PomiarCzasu(plansza.getPreferredSize().width);
-        PasekCzasu pasek = new PasekCzasu();
+        PasekCzasu pasek = new PasekCzasu(this, menu);
        // add(timer);
         add(pasek);
         add (plansza);

@@ -13,9 +13,11 @@ public class PomiarCzasu extends JComponent implements Runnable
     private int startmin,startsek;
     private int currsek,currmin;
     private boolean timeron;
+    private gra gr;
+    private  boolean koniec;
+    private MainMenu menu;
 
-
-    public PomiarCzasu()
+    public PomiarCzasu(gra gr, MainMenu menu)
     {
         timer = new Thread(this);
         //this.width = width;
@@ -25,6 +27,9 @@ public class PomiarCzasu extends JComponent implements Runnable
         this.currmin = 0;
         this.currsek = 0;
         this.timeron = false;
+        this.gr = gr;
+        this.koniec = false;
+        this.menu = menu;
     }
     @Override
     public void paintComponent (Graphics g) {
@@ -57,6 +62,7 @@ public class PomiarCzasu extends JComponent implements Runnable
         timeron = true;
         this.currsek = startsek;
         this.currmin = startmin;
+        koniec = true;
        // this.startmin = startmin;
        // this.startsek = startsek;
 
@@ -79,6 +85,18 @@ public class PomiarCzasu extends JComponent implements Runnable
             {
                 currsek -=1;
                 if(currsek < 0){currsek +=60; currmin -=1;}
+            }
+            if(currsek+currmin == 0 && koniec)
+            {
+                JOptionPane.showMessageDialog(new JFrame(),
+                        "End of time limit." +
+                                (Plansza.iloscPio2 > Plansza.iloscPio1 ? "Upper player wins" : "Lower player wins"),
+                        "Results",
+                        JOptionPane.PLAIN_MESSAGE);
+                gr.dispose();
+                koniec = false;
+                menu.setVisible(true);
+                Thread.currentThread().interrupt();
             }
 
             repaint();
