@@ -20,7 +20,7 @@ import java.util.Random;
 public class Plansza extends JComponent
 {
 
-    private static int bok_planszy = 500;
+    private static int bok_planszy = 500;  //ustalenie wielkości okienka
     private int ip;
     private  int bok_pola;
 
@@ -60,7 +60,8 @@ public class Plansza extends JComponent
         this.gr = gr;
         this.menu = menu;
         Pionek pionek;
-
+        iloscPio1 = 0;
+        iloscPio2 = 0;
         for (int i=0;i<ip;i++)   //tworzenie planszy
         {
             for(int j=0;j<ip;j++)
@@ -69,7 +70,7 @@ public class Plansza extends JComponent
 
                 if(naplanszy(i,j) && j<ip/2-1 && (i+j)%2==1)
                 {
-                    pionek = new Pionek(1, i,j, pola[i][j], bok_pola,ip,kol.c1);
+                    pionek = new Pionek(1, i,j, pola[i][j], bok_pola,ip,kol.c1);   //tworzenie pionkow
                     pionki.add(pionek);
                     pola[i][j].wstaw(pionek);
                     iloscPio1+=1;
@@ -77,7 +78,7 @@ public class Plansza extends JComponent
 
                 if( naplanszy(i,j) && j>ip/2 && (i+j)%2==1)
                 {
-                    pionek = new Pionek(-1, i,j,pola[i][j], bok_pola,ip,kol.c2);
+                    pionek = new Pionek(-1, i,j,pola[i][j], bok_pola,ip,kol.c2);   //tworzenie pionkow
                     pionki.add(pionek);
                     pola[i][j].wstaw(pionek);
                     iloscPio2+=1;
@@ -122,8 +123,6 @@ public class Plansza extends JComponent
 
     private void ruchy(int x, int y)    //operacja wykonania ruchu
     {
-        if(Plansza.iloscPio1 <= 0)zakoncz(true);
-        if(Plansza.iloscPio2 <= 0)zakoncz(false);
         if(pola[x][y].czyzajete() == 1 && czytura(pola[x][y].getPionek()))       //na pionek
         {
 
@@ -161,7 +160,7 @@ public class Plansza extends JComponent
         {
             decolor();
             selected.getPionek().przesun(x,y,pola[x][y],plansza,false);
-            System.out.println(wszmozbicia.size());
+            //System.out.println(wszmozbicia.size());
             aktKolor = - aktKolor;
             if(aktKolor == 1)Pole.col = kol.c1;
             else Pole.col = kol.c2;
@@ -171,10 +170,12 @@ public class Plansza extends JComponent
         else if(selected !=null && pola[x][y].czybicie() == 1)           //bicie
         {
             selected.getPionek().bij(x,y,pola, plansza);
-            System.out.println(wszmozbicia.size());
+            //System.out.println(wszmozbicia.size());
             wszdecolor();
             wszruchy();
             decolor();
+            if(Plansza.iloscPio1 <= 0){zakoncz(true);Plansza.iloscPio2 = 100;}
+            if(Plansza.iloscPio2 <= 0){zakoncz(false);Plansza.iloscPio1 = 100;}
             if(wszmozbicia.size() <  1) {                      //sprawdzenie czy kolejne bicie
                 aktKolor = -aktKolor;
                 if(aktKolor == 1)Pole.col = kol.c1;
@@ -196,11 +197,11 @@ public class Plansza extends JComponent
             for (int j = 1; j < ip - 1; j++) {
                 if (pola[i][j].czyzajete() == 1 && czytura(pola[i][j].getPionek())) {
                     wszselected = pola[i][j];
-                    int kolor = wszselected.getPionek().getKolor();
+                    int kolor = wszselected.getPionek().getKolor();                //kolor pionka
 
                     if(pola[i][j].getPionek().czydamka()== 0)
                     {
-                        int kierunek = pola[i][j].getPionek().getKolor();
+                        int kierunek = pola[i][j].getPionek().getKolor();    //kierunek gora-dol
 
                         bicie(i,j,1,kierunek, false);
                         bicie(i,j,-1,kierunek, false);
@@ -239,6 +240,7 @@ public class Plansza extends JComponent
         Random rand = new Random();
         Ruch r=null;
         wszruchy();
+        System.out.printf("%d %d \n",wszmozbicia.size(), wszmozliwosci.size());
         if(wszmozbicia.size() == 0)
         {
 
@@ -247,6 +249,8 @@ public class Plansza extends JComponent
         }
         else r = wszmozbicia.get(rand.nextInt(wszmozbicia.size()));
 
+        System.out.printf("%d %d \n",r.pocz.getX(), r.pocz.getY());
+        System.out.printf("%d %d \n\n",r.kon.getX(), r.kon.getY());
         ruchy(r.pocz.getX(),r.pocz.getY());
         wszruchy();
         ruchy(r.kon.getX(),r.kon.getY());

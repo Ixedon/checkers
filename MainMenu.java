@@ -25,23 +25,28 @@ public class MainMenu extends JFrame{
         kol.c1 = Color.RED;
         kol.c2 = Color.DARK_GRAY;
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         JPanel listPane = new JPanel();               //okno glowne
 
-//        try {
-//            image = ImageIO.read(new File("background.jpg"));
-//        } catch (IOException ex) {
-//            // handle exception...
-//        }
-//        JPanel imagePlanel = new JPanel()
-//        {
-//            @Override
-//            public void paintComponent(Graphics g)
-//            {
-//                g.drawImage(image, 0, 0, null);
-//            }
-//        };
+        try {
+            image = ImageIO.read(new File("src/com/warcaby/ikona.png"));
+        } catch (IOException ex) {
+            // handle exception...
+            System.out.println("Error reading image");
+        }
 
-        setSize(new Dimension(200,200));
+
+
+        JPanel imagePlanel = new JPanel()
+        {
+            @Override
+            public void paintComponent(Graphics g)
+            {
+                g.drawImage(image, 0, 0, null);
+            }
+        };
+
+        setSize(new Dimension(233,400));
         listPane.setLayout(new BoxLayout(listPane, BoxLayout.Y_AXIS));
         listPane.add(Box.createRigidArea(new Dimension(0,15)));
 
@@ -56,6 +61,7 @@ public class MainMenu extends JFrame{
         JButton close = new JButton("Quit");
         close.setAlignmentX(Component.CENTER_ALIGNMENT);
         listPane.add(close);
+        listPane.add(Box.createRigidArea(new Dimension(0,10)));
 
 
 
@@ -84,7 +90,7 @@ public class MainMenu extends JFrame{
 
         JLabel label2 = new JLabel("Select color");           //wybor koloru
         optPane.add(label2);
-        String[] kolory = {"Red-Black", "White-Red", "White-Black"};
+        String[] kolory = {"Black-Red", "White-Red", "White-Black"};
         JComboBox kolor = new JComboBox(kolory);
         kolor.setSelectedIndex(0);
         optPane.add(kolor);
@@ -94,12 +100,13 @@ public class MainMenu extends JFrame{
         optPane.add(submit);
 
         options.setContentPane(optPane);
-
+        imagePlanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         MainMenu menu = this;
-        //add(imagePlanel);
-        //add(listPane);
-        setContentPane(listPane);
+        add(imagePlanel);
+        add(listPane);
+        //setContentPane(listPane);
+        //setContentPane(imagePlanel);
         setVisible(true);
 
         submit.addActionListener(new ActionListener() {              //submit opcji
@@ -109,7 +116,7 @@ public class MainMenu extends JFrame{
                 size = Integer.parseInt(parts[0]);
 
                 s = String.valueOf(kolor.getSelectedItem());
-                if(s == "Red-Black"){kol.c2 = Color.RED; kol.c1 = Color.DARK_GRAY;}
+                if(s == "Black-Red"){kol.c2 = Color.DARK_GRAY; kol.c1 = Color.RED;}
                 if(s == "White-Red"){kol.c2 = Color.LIGHT_GRAY; kol.c1 = Color.RED;}
                 if(s == "White-Black"){kol.c2 = Color.LIGHT_GRAY; kol.c1 = Color.DARK_GRAY;}
 
