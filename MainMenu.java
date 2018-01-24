@@ -8,7 +8,6 @@ import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
 
-import static java.lang.Integer.parseInt;
 
 public class MainMenu extends JFrame{
 
@@ -31,7 +30,6 @@ public class MainMenu extends JFrame{
         try {
             image = ImageIO.read(new File("src/com/warcaby/ikona.png"));
         } catch (IOException ex) {
-            // handle exception...
             System.out.println("Error reading image");
         }
 
@@ -105,8 +103,6 @@ public class MainMenu extends JFrame{
         MainMenu menu = this;
         add(imagePlanel);
         add(listPane);
-        //setContentPane(listPane);
-        //setContentPane(imagePlanel);
         setVisible(true);
 
         submit.addActionListener(new ActionListener() {              //submit opcji

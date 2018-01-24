@@ -1,18 +1,14 @@
 package com.warcaby;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseMotionAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 import javax.swing.*;
 import java.util.Random;
@@ -170,7 +166,6 @@ public class Plansza extends JComponent
         else if(selected !=null && pola[x][y].czybicie() == 1)           //bicie
         {
             selected.getPionek().bij(x,y,pola, plansza);
-            //System.out.println(wszmozbicia.size());
             wszdecolor();
             wszruchy();
             decolor();
@@ -240,7 +235,6 @@ public class Plansza extends JComponent
         Random rand = new Random();
         Ruch r=null;
         wszruchy();
-        System.out.printf("%d %d \n",wszmozbicia.size(), wszmozliwosci.size());
         if(wszmozbicia.size() == 0)
         {
 
@@ -249,8 +243,6 @@ public class Plansza extends JComponent
         }
         else r = wszmozbicia.get(rand.nextInt(wszmozbicia.size()));
 
-        System.out.printf("%d %d \n",r.pocz.getX(), r.pocz.getY());
-        System.out.printf("%d %d \n\n",r.kon.getX(), r.kon.getY());
         ruchy(r.pocz.getX(),r.pocz.getY());
         wszruchy();
         ruchy(r.kon.getX(),r.kon.getY());
@@ -340,7 +332,7 @@ public class Plansza extends JComponent
                 c++;
                 if(kolor != pola[x+a][y+b].getPionek().getKolor())
                 {
-                    zbijany = pola[x+a][y+b].getPionek();
+                    zbijany = pola[x+a][y+b].getPionek();              //przechwycenie zbijanego pionka
                 }
             }
             x+=strona;

@@ -3,7 +3,6 @@ package com.warcaby;
 import java.awt.Graphics;
 import java.awt.Color;
 
-import java.util.Scanner;
 
 public class Pionek {
     private static int srednica;
@@ -94,7 +93,6 @@ public class Pionek {
         if(kolor == 1 && this.y == this.ip-1 || kolor == -1 && this.y == 1)
         {
             this.damka = 1;
-            //System.out.println(1);
         }
     }
 
@@ -110,8 +108,6 @@ public class Pionek {
     {
         if(kolor == -1)Plansza.iloscPio1 -=1;
         else Plansza.iloscPio2 -=1;
-        //System.out.println(Plansza.iloscPio1);
-        //System.out.println(Plansza.iloscPio2);
         this.pole.usun();
     }
 

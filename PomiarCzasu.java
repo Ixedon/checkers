@@ -63,9 +63,6 @@ public class PomiarCzasu extends JComponent implements Runnable
         this.currsek = startsek;
         this.currmin = startmin;
         koniec = true;
-       // this.startmin = startmin;
-       // this.startsek = startsek;
-
     }
 
 

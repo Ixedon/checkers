@@ -25,11 +25,10 @@ public class Pole {  //stworzeie parametrow pol
         this.zajete = 0;
         this.bicie = 0;
         this.obwod = obwod;
-        //col = new Color(200, 130, 24);
     }
     public void draw(Graphics g)
     {
-        if(obwod == true)g.setColor(col);   //g.setColor(new Color(200, 130, 24));        //kolor obwodki
+        if(obwod == true)g.setColor(col);                                              //kolor obwodki
         else if(selected == 1) g.setColor(Color.BLUE);                                   //wybor koloru
         else if(mozliwe == 1) g.setColor(Color.GREEN);
         else if(bicie == 1) g.setColor(Color.RED);
